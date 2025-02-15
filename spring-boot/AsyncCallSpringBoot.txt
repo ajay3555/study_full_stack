@@ -1,0 +1,21 @@
+@RequestMapping(value = "test2", method = RequestMethod.POST)
+@ResponseStatus(HttpStatus.ACCEPTED)
+public ResponseEntity<String> updateDB() {  
+  System.out.println(Thread.currentThread());  
+  CompletableFuture.runAsync(() -> {     
+  try {           
+  userService.executeInBackground();
+  } catch (InterruptedException e) { 
+  throw new RuntimeException(e);        
+  }});    return new ResponseEntity<>(HttpStatus.ACCEPTED);}
+  
+  
+  UserService.java
+  
+  
+  @Asyncpublic void executeInBackground() throws InterruptedException {
+  for (int i = 0; i<100; i++) {     
+  System.out.println("executeDBUpdate called :: ");    
+  Thread.sleep(10000);    }}
+  
+  
